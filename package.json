@@ -9,15 +9,20 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@prisma/client": "^5.7.1",
     "axios": "^1.6.5",
     "bcrypt": "^5.1.1",
+    "font-awesome": "^4.7.0",
     "next": "^14.0.4",
     "next-auth": "^4.24.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
-    "react-hook-form": "^7.49.2"
+    "react-hook-form": "^7.49.2",
+    "react-router-dom": "^6.21.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",

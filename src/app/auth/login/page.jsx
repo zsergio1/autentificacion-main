@@ -1,8 +1,8 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
-import {useRouter} from 'next/navigation'
-import {useState} from 'react'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 function LoginPage() {
   const {
@@ -12,7 +12,7 @@ function LoginPage() {
   } = useForm();
   const router = useRouter()
   const [error, setError] = useState(null)
-  
+
   const onSubmit = handleSubmit(async (data) => {
     console.log(data);
 
@@ -31,61 +31,67 @@ function LoginPage() {
     }
   });
 
+
   return (
-    <div className="h-[calc(100vh-7rem)] flex justify-center items-center">
-      <form onSubmit={onSubmit} className="w-1/4">
-
+    <div className="h-[calc(100vh-7rem)] flex justify-center items-center bg-slate-200">
+      <form onSubmit={onSubmit} className="w-1/4 bg-slate-200 p-8 rounded-lg shadow-lg border-2 border-transparent border-opacity-50" style={{
+        transition: 'border-color 0.1s ease',
+        borderColor: 'transparent',
+        
+      }}>
         {error && (
-          <p className="bg-red-500 text-lg text-white p-3 rounded mb-2">{error}</p>
+          <p className="bg-red-500 text-lg text-white p-3 rounded mb-4">{error}</p>
         )}
 
-        <h1 className="text-slate-200 font-bold text-4xl mb-4">Login</h1>
+        <h1 className="text-black font-bold text-4xl mb-6">Iniciar sesión</h1>
 
-        <label htmlFor="email" className="text-slate-500 mb-2 block text-sm">
-          Email:
-        </label>
-        <input
-          type="email"
-          {...register("email", {
-            required: {
-              value: true,
-              message: "Email is required",
-            },
-          })}
-          className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
-          placeholder="user@email.com"
-        />
 
-        {errors.email && (
-          <span className="text-red-500 text-xs">{errors.email.message}</span>
-        )}
+        <div className="mb-4">
+          <label htmlFor="email" className="text-slate-500 block text-sm mb-2">
+            Email:
+          </label>
+          <input
+            type="email"
+            {...register("email", {
+              required: {
+                value: true,
+                message: "Email is required",
+              },
+            })}
+            className="p-3 rounded block mb-2 bg-slate-200 text-slate-300 w-full focus:border-neon"
+            placeholder="user@email.com"
+          />
+          {errors.email && (
+            <span className="text-red-500 text-xs">{errors.email.message}</span>
+          )}
+        </div>
 
-        <label htmlFor="password" className="text-slate-500 mb-2 block text-sm">
-          Password:
-        </label>
-        <input
-          type="password"
-          {...register("password", {
-            required: {
-              value: true,
-              message: "Password is required",
-            },
-          })}
-          className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
-          placeholder="******"
-        />
+        <div className="mb-4">
+          <label htmlFor="password" className="text-slate-500 block text-sm mb-2">
+            Password:
+          </label>
+          <input
+            type="password"
+            {...register("password", {
+              required: {
+                value: true,
+                message: "Password is required",
+              },
+            })}
+            className="p-3 rounded block mb-2 bg-slate-200 text-slate-300 w-full focus:border-neon"
+            placeholder="******"
+          />
+          {errors.password && (
+            <span className="text-red-500 text-xs">{errors.password.message}</span>
+          )}
+        </div>
 
-        {errors.password && (
-          <span className="text-red-500 text-xs">
-            {errors.password.message}
-          </span>
-        )}
-
-        <button className="w-full bg-blue-500 text-white p-3 rounded-lg mt-2">
+        <button className="w-full bg-blue-500 text-white p-3 rounded-lg mt-4">
           Login
         </button>
       </form>
     </div>
   );
-}
+};
+
 export default LoginPage;

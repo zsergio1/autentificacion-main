@@ -10,6 +10,7 @@ function DashboardPage() {
   const [users, setUsers] = useState([]);
   const [editingUserId, setEditingUserId] = useState(null);
   const [updatedUserData, setUpdatedUserData] = useState({});
+  
 
   useEffect(() => {
     fetch('http://localhost:8080/api/usuarios')
@@ -91,80 +92,77 @@ function DashboardPage() {
   const renderRow = (user) => {
     if (editingUserId === user.id) {
       return (
-        <tr key={user.id}>
-          <td className="border px-4 py-2">{user.id}</td>
-          <td className="border px-4 py-2">
+        <tr key={user.id} className="bg-gray-100">
+          <td className="border px-6 py-4">{user.id}</td>
+          <td className="border px-6 py-4">
             <input
               type="text"
+              className="border p-2 rounded-md w-full"
               value={updatedUserData.username || user.username}
               onChange={(e) => handleInputChange(e, 'username')}
             />
           </td>
-          <td className="border px-4 py-2">
+          <td className="border px-6 py-4">
             <input
               type="email"
+              className="border p-2 rounded-md w-full"
               value={updatedUserData.email || user.email}
               onChange={(e) => handleInputChange(e, 'email')}
             />
           </td>
-          <td className="border px-4 py-2">
-            <button className="bg-green-500 hover:bg-green-700 text-white px-2 py-1 rounded mr-2" onClick={() => handleSave(user.id)}>Guardar</button>
-            <button className="bg-red-500 hover:bg-red-700 text-white px-2 py-1 rounded" onClick={handleCancel}>Cancelar</button>
+          <td className="border px-6 py-4">
+            <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md mr-2" onClick={() => handleSave(user.id)}>
+              Guardar
+            </button>
+            <button className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md" onClick={handleCancel}>
+              Cancelar
+            </button>
           </td>
         </tr>
       );
     } else {
       return (
         <tr key={user.id}>
-          <td className="border px-4 py-2">{user.id}</td>
-          <td className="border px-4 py-2">{user.username}</td>
-          <td className="border px-4 py-2">{user.email}</td>
-          <td className="border px-4 py-2">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white px-2 py-1 rounded mr-2" onClick={() => handleEdit(user.id, { username: user.username, email: user.email })}>Editar</button>
-            <button className="bg-red-500 hover:bg-red-700 text-white px-2 py-1 rounded" onClick={() => handleDelete(user.id)}>Eliminar</button>
+          <td className="border px-6 py-4">{user.id}</td>
+          <td className="border px-6 py-4">{user.username}</td>
+          <td className="border px-6 py-4">{user.email}</td>
+          <td className="border px-6 py-4">
+            <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md mr-2" onClick={() => handleEdit(user.id, { username: user.username, email: user.email })}>
+              Editar
+            </button>
+            <button className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md" onClick={() => handleDelete(user.id)}>
+              Eliminar
+            </button>
           </td>
         </tr>
       );
     }
   };
-
+  
   return (
-    <section className="flex h-screen">
-    {/* Utiliza el componente Sidebar en lugar del código del sidebar anterior */}
-    <Sidebar />
+    <section className="flex h-screen bg-gray-200">
+      {/* Utiliza el componente Sidebar en lugar del código del sidebar anterior */}
+      <Sidebar />
       {/* Contenido principal */}
-      <main className="flex-1 p-4">
-        <h1 className="text-5xl mb-4 text-white">Logueado</h1>
-
-        <div className="mt-4">
-          <h2 className="text-2xl mb-2 text-white">Usuarios Registrados:</h2>
-          <table className="min-w-full bg-white text-black">
+      <main className="flex-1 p-6">
+        <h1 className="text-5xl mb-8 text-gray-800">Logueado</h1>
+  
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h2 className="text-2xl mb-6 text-gray-700">Usuarios Registrados:</h2>
+          <table className="min-w-full border-collapse border border-gray-300">
             <thead>
-              <tr>
-                <th className="px-4 py-2">ID</th>
-                <th className="px-4 py-2">Nombre de Usuario</th>
-                <th className="px-4 py-2">Correo Electrónico</th>
-                <th className="px-4 py-2">Acciones</th>
+              <tr className="bg-gray-200">
+                <th className="px-6 py-4 text-left text-gray-600">ID</th>
+                <th className="px-6 py-4 text-left text-gray-600">Nombre de Usuario</th>
+                <th className="px-6 py-4 text-left text-gray-600">Correo Electrónico</th>
+                <th className="px-6 py-4 text-left text-gray-600">Acciones</th>
               </tr>
             </thead>
             <tbody>
-              {users.map(user => (
-                <tr key={user.id}>
-                  <td className="border px-4 py-2">{user.id}</td>
-                  <td className="border px-4 py-2">{user.username}</td>
-                  <td className="border px-4 py-2">{user.email}</td>
-                  <td className="border px-4 py-2">
-                    {/* Aquí irían los botones de editar y eliminar */}
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white px-2 py-1 rounded mr-2">Editar</button>
-                    <button className="bg-red-500 hover:bg-red-700 text-white px-2 py-1 rounded">Eliminar</button>
-                  </td>
-                </tr>
-              ))}
+              {users.map((user) => renderRow(user))}
             </tbody>
           </table>
-
-          {/* Botón para logout */}
-          <button className="bg-white text-black px-4 py-2 rounded-md mt-4" onClick={() => signOut()}>
+          <button className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md mt-6" onClick={() => signOut()}>
             Logout
           </button>
         </div>
@@ -172,5 +170,7 @@ function DashboardPage() {
     </section>
   );
 }
+  
+  export default DashboardPage;
+  
 
-export default DashboardPage;
